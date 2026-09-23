@@ -6,4 +6,4 @@ This project contains a couple of exercises
 
 ## Student 
 
-- ABDELILAH  BAAMOUDI
+- Abdelilah BAAMOUDI
