@@ -5,24 +5,51 @@ import java.util.Comparator;
 
 public class ManageStudent {
 
+
     // 2) Find the Oldest Student
     public static Student findOldest(Student[] students) {
+        Student oldest=students[0];
+        for(Student student: students){
+            if(student.getAge()>oldest.getAge()){
+                oldest=student;
+            }
+
+        }
 
         return oldest;
     }
 
     // 3) Count Adult Students (age >= 18)
     public static int countAdults(Student[] students) {
+        int count=0;
+        for(Student std:students){
+            if(std.getAge()>=18) count++;
+        }
+        return count;
 
     }
 
     // 4) Average Grade (returns NaN if no students or grades)
     public static double averageGrade(Student[] students) {
+        int sumGrades=0;
+        for(Student std:students){
+            sumGrades+=std.getGrade();
+        }
+        double average=(double)sumGrades/students.length;
+
+        return average;
 
     }
 
     // 5) Search by Name (case-sensitive; change to equalsIgnoreCase if desired)
     public static Student findStudentByName(Student[] students, String name) {
+        for(Student s: students){
+            if(s.getName().equalsIgnoreCase(name)){
+                return s;
+            }
+        }
+        return null;
+
 
     }
 
@@ -54,6 +81,13 @@ public class ManageStudent {
     // 1) Create an Array of Students + demos for all tasks
     public static void main(String[] args) {
         // Create & initialize array of 5 students
+
+        Student[] arr = new Student[5];
+        arr[0] = new Student(1, "Ali");
+        arr[1] = new Student(2, "Sara", 20);
+        arr[2] = new Student(3, "Yassmin", 19, 16);
+        arr[3] = new Student(4, "Hamza", 17, 14);
+        arr[4] = new Student(5, "Abdelilah", 20, 1);
 
 
         // Print all
