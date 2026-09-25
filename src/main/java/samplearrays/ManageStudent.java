@@ -8,6 +8,9 @@ public class ManageStudent {
 
     // 2) Find the Oldest Student
     public static Student findOldest(Student[] students) {
+        if (students == null || students.length == 0) {
+            return null;
+        }
         Student oldest=students[0];
         for(Student student: students){
             if(student.getAge()>oldest.getAge()){
@@ -21,9 +24,12 @@ public class ManageStudent {
 
     // 3) Count Adult Students (age >= 18)
     public static int countAdults(Student[] students) {
+        if(students == null || students.length==0){
+            return 0;
+        }
         int count=0;
         for(Student std:students){
-            if(std.getAge()>=18) count++;
+            if(std.isAdult()) count++;
         }
         return count;
 
@@ -31,6 +37,9 @@ public class ManageStudent {
 
     // 4) Average Grade (returns NaN if no students or grades)
     public static double averageGrade(Student[] students) {
+        if (students == null || students.length == 0) {
+            return Double.NaN;
+        }
         int sumGrades=0;
         for(Student std:students){
             sumGrades+=std.getGrade();
@@ -44,7 +53,7 @@ public class ManageStudent {
     // 5) Search by Name (case-sensitive; change to equalsIgnoreCase if desired)
     public static Student findStudentByName(Student[] students, String name) {
         for(Student s: students){
-            if(s.getName().equalsIgnoreCase(name)){
+            if(s.getName().equals(name)){
                 return s;
             }
         }
@@ -125,7 +134,7 @@ public class ManageStudent {
         arr[0] = new Student(1, "Ali");
         arr[1] = new Student(2, "Sara", 20);
         arr[2] = new Student(3, "Yassmin", 19, 16);
-        arr[3] = new Student(4, "Hamza", 17, 14);
+        arr[3] = new Student(4, "Dina", 17, 14);
         arr[4] = new Student(5, "Abdelilah", 20, 20);
 
 
@@ -140,40 +149,47 @@ public class ManageStudent {
 
 
         // 3) Count adults
-        System.out.println("The Adults");
+        System.out.println("The Adults :");
         System.out.println(ManageStudent.countAdults(arr));
 
 
         // 4) Average grade
-        System.out.println("Average");
-        System.out.println(ManageStudent.averageGrade(arr));
+
+        System.out.println("Average :"+ManageStudent.averageGrade(arr));
 
 
 
         // 5) Find by name
-        System.out.println("Searching : Yassmin?");
+        System.out.println("Searching : Yassmin ?");
         System.out.println(ManageStudent.findStudentByName(arr,"Yassmin"));
 
 
         // 6) Sort by grade desc
         // sort function
+        sortByGradeDesc(arr);
         System.out.println("\n== Sorted by grade (desc) ==");
         for (Student s : arr) System.out.println(s);
 
         // 7) High achievers >= 15
-        System.out.println("\nHigh achievers:");
+        System.out.println("\nHigh achievers :");
         printHighAchievers(arr);
 
         // 8) Update grade by id
         // function
-        //System.out.println("\nUpdated id=4? " + updated);
-        //System.out.println(findStudentByName(arr, "Dina"));
+        boolean updated = updateGrade(arr, 4, 18);
+        System.out.println("\nUpdated id=4? " + updated);
+        System.out.println("== findStudentByName ==");
+        System.out.println(findStudentByName(arr, "Dina"));
 
         // 9) Duplicate names
 
+        System.out.println("\nDuplicate names? " + hasDuplicateNames(arr));
+
 
         // 10) Append new student
-
+        Student[] biggerArr = appendStudent(arr, new Student(6, "Nizar", 21, 12));
+        System.out.println("\n== After append ==");
+        for (Student s : biggerArr) System.out.println(s);
 
         // 11)  Student Matrix
 
@@ -186,7 +202,7 @@ public class ManageStudent {
         classes[1][0] = new Student(44, "Hamza", 17, 14);
         classes[1][1] = new Student(55, "Abdelilah", 20, 20);
         classes[1][2] = new Student(66, "Nora", 18, 17);
-        System.out.println("--Print the names of all students class by class");
+        System.out.println("== Print the names of all students class by class ==");
 
         for(int i=0;i<2;i++){
             System.out.println("__Class: "+(i+1)+"__");
@@ -195,7 +211,7 @@ public class ManageStudent {
             }
         }
 
-        System.out.println("The Top Student in Each Class");
+        System.out.println("== The Top Student in Each Class ==");
         sortByGradeDesc(classes[0]);
         System.out.println("Class 1 :");
         System.out.println(classes[0][0]);
